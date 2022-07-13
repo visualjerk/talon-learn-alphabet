@@ -23,44 +23,16 @@ watch(hasCorrectAnswer, async (value) => {
 
 <template>
   <div>
-    <article :class="[hasCorrectAnswer && 'is-correct']">
-      <h2>{{ character }}</h2>
-      <input v-model="answer" />
+    <article
+      class="flex items-center flex-col p-8 pt-4 border-4 border-gray-500 rounded-2xl"
+      :class="[hasCorrectAnswer && 'border-green-500']"
+    >
+      <h2 class="text-9xl">{{ character }}</h2>
+      <input
+        class="text-7xl text-center font-bold max-w-[10rem] p-2 mt-5 border-2 border-gray-300 focus:border-indigo-600"
+        v-model="answer"
+      />
     </article>
-    <aside>{{ word }}</aside>
+    <aside class="mt-60 text-xs text-center text-gray-300">{{ word }}</aside>
   </div>
 </template>
-
-<style scoped>
-article {
-  border: 0.2rem solid grey;
-  border-radius: 1rem;
-  padding: 1rem 2rem 2rem;
-  max-width: 14rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-h2 {
-  font-size: 7rem;
-}
-
-input {
-  font-size: 5rem;
-  max-width: 10rem;
-  padding: 1rem;
-  text-align: center;
-  font-weight: bold;
-}
-.is-correct {
-  border-color: green;
-}
-
-aside {
-  font-size: smaller;
-  color: lightgray;
-  margin-block-start: 16rem;
-  text-align: center;
-}
-</style>
