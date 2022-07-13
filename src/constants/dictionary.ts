@@ -1,4 +1,4 @@
-export const ALPHABET = {
+export const DICTIONARY = {
   a: 'air',
   b: 'bat',
   c: 'cap',

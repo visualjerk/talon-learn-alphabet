@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import { ref, unref, computed, watch } from 'vue'
-import { ALPHABET } from '../constants/alphabet'
+import { DICTIONARY } from '../constants/dictionary'
 
-const props = defineProps<{ character: keyof typeof ALPHABET }>()
-const emit = defineEmits(['correct-answer'])
+const props = defineProps<{ character: keyof typeof DICTIONARY }>()
+const emit = defineEmits<{
+  (e: 'correctAnswer'): void
+}>()
 
 const answer = ref('')
-const word = computed(() => ALPHABET[props.character])
+const word = computed(() => DICTIONARY[props.character])
 const hasCorrectAnswer = computed(
   () => unref(answer) === unref(word) || unref(answer) === props.character
 )
 watch(hasCorrectAnswer, async (value) => {
   if (value) {
     await new Promise((resolve) => setTimeout(resolve, 1000))
-    emit('correct-answer')
+    emit('correctAnswer')
     answer.value = ''
   }
 })

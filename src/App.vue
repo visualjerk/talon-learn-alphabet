@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed, ref, unref } from 'vue'
-import { ALPHABET } from './constants/alphabet'
+import { DICTIONARY } from './constants/dictionary'
 import QuestionBox from './components/QuestionBox.vue'
 
 const currentIndex = ref(0)
-const currentChar = computed<keyof typeof ALPHABET>(
-  () => Object.keys(ALPHABET)[unref(currentIndex)] as keyof typeof ALPHABET
+const currentChar = computed<keyof typeof DICTIONARY>(
+  () => Object.keys(DICTIONARY)[unref(currentIndex)] as keyof typeof DICTIONARY
 )
 function showNextQuestion(): void {
-  if (unref(currentIndex) === Object.keys(ALPHABET).length - 1) {
+  if (unref(currentIndex) === Object.keys(DICTIONARY).length - 1) {
     currentIndex.value = 0
     return
   }
@@ -17,7 +17,7 @@ function showNextQuestion(): void {
 </script>
 
 <template>
-  <QuestionBox :character="currentChar" @correct-answer="showNextQuestion" />
+  <QuestionBox :character="currentChar" @correctAnswer="showNextQuestion" />
 </template>
 
 <style>
