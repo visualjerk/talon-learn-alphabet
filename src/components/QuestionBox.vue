@@ -40,9 +40,12 @@ watch(hasCorrectAnswer, async (value) => {
             ? 'focus:bg-green-300 focus:outline-green-500'
             : 'focus:bg-purple-200 focus:outline-purple-500',
         ]"
+        autofocus
         v-model="answer"
       />
     </article>
-    <aside class="mt-60 text-xs text-center text-slate-300">{{ word }}</aside>
+    <aside class="mt-20 text-xs text-center text-slate-300">
+      Help: {{ word }}
+    </aside>
   </div>
 </template>
