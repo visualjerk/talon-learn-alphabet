@@ -17,7 +17,7 @@ function showNextQuestion(): void {
 </script>
 
 <template>
-  <main class="flex justify-center mt-10">
+  <main class="flex justify-center h-screen pt-10 bg-slate-50">
     <QuestionBox :character="currentChar" @correctAnswer="showNextQuestion" />
   </main>
 </template>

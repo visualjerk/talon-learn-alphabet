@@ -17,6 +17,7 @@ watch(hasCorrectAnswer, async (value) => {
     await new Promise((resolve) => setTimeout(resolve, 1000))
     emit('correctAnswer')
     answer.value = ''
+    return
   }
 })
 </script>
@@ -24,15 +25,24 @@ watch(hasCorrectAnswer, async (value) => {
 <template>
   <div>
     <article
-      class="flex items-center flex-col p-8 pt-4 border-4 border-gray-500 rounded-2xl"
-      :class="[hasCorrectAnswer && 'border-green-500']"
+      class="flex items-center flex-col p-8 pt-4 border-4 rounded-2xl shadow-2xl"
+      :class="[
+        hasCorrectAnswer
+          ? 'border-green-600 bg-green-50 shadow-green-300'
+          : 'border-slate-200 bg-white shadow-slate-300',
+      ]"
     >
-      <h2 class="text-9xl">{{ character }}</h2>
+      <h2 class="text-9xl text-slate-700">{{ character }}</h2>
       <input
-        class="text-7xl text-center font-bold max-w-[10rem] p-2 mt-5 border-2 border-gray-300 focus:border-indigo-600"
+        class="text-7xl text-center font-medium text-slate-800 bg-slate-200 max-w-[10rem] p-2 mt-8 rounded-xl focus:outline-8"
+        :class="[
+          hasCorrectAnswer
+            ? 'focus:bg-green-300 focus:outline-green-500'
+            : 'focus:bg-purple-200 focus:outline-purple-500',
+        ]"
         v-model="answer"
       />
     </article>
-    <aside class="mt-60 text-xs text-center text-gray-300">{{ word }}</aside>
+    <aside class="mt-60 text-xs text-center text-slate-300">{{ word }}</aside>
   </div>
 </template>
