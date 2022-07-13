@@ -2,7 +2,10 @@
 import { ref, unref, computed, watch } from 'vue'
 import { DICTIONARY } from '../constants/dictionary'
 
-const props = defineProps<{ character: keyof typeof DICTIONARY }>()
+const props = defineProps<{
+  character: keyof typeof DICTIONARY
+  easyMode: boolean
+}>()
 const emit = defineEmits<{
   (e: 'correctAnswer'): void
 }>()
@@ -23,7 +26,7 @@ watch(hasCorrectAnswer, async (value) => {
 </script>
 
 <template>
-  <div>
+  <div class="flex items-center flex-col">
     <article
       class="flex items-center flex-col p-8 pt-4 border-4 rounded-2xl shadow-2xl"
       :class="[
@@ -44,8 +47,15 @@ watch(hasCorrectAnswer, async (value) => {
         v-model="answer"
       />
     </article>
-    <aside class="mt-20 text-xs text-center text-slate-300">
-      Help: {{ word }}
+    <aside
+      class="text-center"
+      :class="[
+        easyMode
+          ? 'mt-6 text-5xl text-slate-700'
+          : 'mt-20 text-xs text-slate-300',
+      ]"
+    >
+      Say: <span class="font-medium">"{{ word }}"</span>
     </aside>
   </div>
 </template>
