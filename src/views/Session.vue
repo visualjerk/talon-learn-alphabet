@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref, unref } from 'vue'
+import { nextTick, onMounted, ref, unref, computed } from 'vue'
 import { DICTIONARY } from '../constants/dictionary'
 import { useSession } from '../hooks/use-session'
 import { useTimer } from '../hooks/use-timer'
@@ -11,6 +11,9 @@ const { current, next, addError } = useSession<typeof DICTIONARY>(
   'TALON',
   DICTIONARY
 )
+const sessionRunning = ref(false)
+const showWord = ref(false)
+const word = computed(() => DICTIONARY[unref(current)])
 
 async function showNextQuestion(): Promise<void> {
   next()
@@ -19,15 +22,23 @@ async function showNextQuestion(): Promise<void> {
   unref(boxRef).reset()
 }
 
+let resetAfterWrongAnswerTimeout: number
+
 async function handleCorrectAnswer(): Promise<void> {
+  clearInterval(resetAfterWrongAnswerTimeout)
   pause()
   await new Promise((resolve) => setTimeout(resolve, 1000))
+  showWord.value = false
   showNextQuestion()
 }
 
 function handleWrongAnswer(): void {
   addError()
-  showNextQuestion()
+  showWord.value = true
+  resetAfterWrongAnswerTimeout = setTimeout(() => {
+    showWord.value = false
+    showNextQuestion()
+  }, 3000)
 }
 
 const ANSWER_TIME = 5000
@@ -37,11 +48,12 @@ const { isActive, pause, resume, restart, timeLeft } = useTimer(
 )
 
 async function toggleSession() {
+  sessionRunning.value = !unref(sessionRunning)
   if (unref(isActive)) {
     pause()
-    return
+  } else {
+    resume()
   }
-  resume()
   await nextTick()
   unref(boxRef).reset()
 }
@@ -54,7 +66,7 @@ onMounted(() => unref(boxRef).reset())
   <article class="text-xs text-slate-700">
     <div class="flex gap-3">
       <ActionButton @click="toggleSession">
-        <template v-if="isActive">Stop Session</template>
+        <template v-if="sessionRunning">Stop Session</template>
         <template v-else>Start Session</template>
       </ActionButton>
     </div>
@@ -63,7 +75,7 @@ onMounted(() => unref(boxRef).reset())
     ref="boxRef"
     :character="current"
     @correctAnswer="handleCorrectAnswer"
-    :disabled="!isActive"
+    :disabled="!sessionRunning"
   />
   <div class="h-3 bg-purple-200 w-60 rounded-lg overflow-hidden mb-3">
     <div
@@ -71,4 +83,7 @@ onMounted(() => unref(boxRef).reset())
       :style="{ transform: `scaleX(${timeLeft / ANSWER_TIME})` }"
     ></div>
   </div>
+  <aside class="text-center mt-6 text-5xl text-slate-700" v-if="showWord">
+    Say: <span class="font-medium">"{{ word }}"</span>
+  </aside>
 </template>
