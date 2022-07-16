@@ -14,8 +14,9 @@ const { current, next, addError } = useSession<typeof DICTIONARY>(
 
 async function showNextQuestion(): Promise<void> {
   next()
-  unref(boxRef).reset()
   restart()
+  await nextTick()
+  unref(boxRef).reset()
 }
 
 async function handleCorrectAnswer(): Promise<void> {
