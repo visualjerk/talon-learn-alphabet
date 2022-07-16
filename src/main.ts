@@ -1,5 +1,29 @@
 import { createApp } from 'vue'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import App from './App.vue'
 import './index.css'
 
-createApp(App).mount('#app')
+const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    component: () => import('./views/Home.vue'),
+  },
+  {
+    path: '/alphabet',
+    component: () => import('./views/Alphabet.vue'),
+  },
+  {
+    path: '/session',
+    component: () => import('./views/Session.vue'),
+  },
+]
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
+})
+
+const app = createApp(App)
+app.use(router)
+
+app.mount('#app')
