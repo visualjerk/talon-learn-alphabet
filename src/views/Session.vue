@@ -19,6 +19,7 @@ async function showNextQuestion(): Promise<void> {
 }
 
 async function handleCorrectAnswer(): Promise<void> {
+  pause()
   await new Promise((resolve) => setTimeout(resolve, 1000))
   showNextQuestion()
 }
