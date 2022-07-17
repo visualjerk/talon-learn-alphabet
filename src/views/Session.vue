@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, unref, computed } from 'vue'
-import { DICTIONARY } from '../constants/dictionary'
+import { STORAGE_KEY, DICTIONARY } from '../constants/dictionary'
 import { useSession } from '../hooks/use-session'
 import { useTimer } from '../hooks/use-timer'
 import QuestionBox from '../components/QuestionBox.vue'
 import ActionButton from '../components/ActionButton.vue'
+import LinkButton from '../components/LinkButton.vue'
 
 const boxRef = ref()
-const { current, next, addError } = useSession<typeof DICTIONARY>(
-  'TALON',
-  DICTIONARY
-)
+const { current, next, addError } = useSession(STORAGE_KEY, DICTIONARY)
 const sessionRunning = ref(false)
 const showWord = ref(false)
 const word = computed(() => DICTIONARY[unref(current)])
@@ -63,14 +61,13 @@ onMounted(() => unref(boxRef).reset())
 </script>
 
 <template>
-  <article class="text-xs text-slate-700">
-    <div class="flex gap-3">
-      <ActionButton @click="toggleSession">
-        <template v-if="sessionRunning">Stop Session</template>
-        <template v-else>Start Session</template>
-      </ActionButton>
-    </div>
-  </article>
+  <div class="flex gap-3">
+    <ActionButton @click="toggleSession">
+      <template v-if="sessionRunning">Stop Session</template>
+      <template v-else>Start Session</template>
+    </ActionButton>
+    <LinkButton to="/session-result">Show Results</LinkButton>
+  </div>
   <QuestionBox
     ref="boxRef"
     :character="current"

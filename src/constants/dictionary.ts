@@ -1,3 +1,5 @@
+export const STORAGE_KEY = 'TALON'
+
 export const DICTIONARY = {
   a: 'air',
   b: 'bat',

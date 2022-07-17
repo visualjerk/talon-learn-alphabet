@@ -1,12 +1,21 @@
 import { useStorage } from '@vueuse/core'
 import { unref, shallowRef, computed } from 'vue'
 
-type EntryState = {
+export type EntryState = {
   shown: number
   errors: number
 }
 
+export type ResultItem<DictionaryType> = EntryState & {
+  key: keyof DictionaryType
+  accuracy: number
+}
+
 type SessionState<DictionaryType> = Record<keyof DictionaryType, EntryState>
+
+function getWeight(entry: EntryState): number {
+  return Math.max(10 + entry.errors - entry.shown, 1)
+}
 
 export function useSession<DictionaryType extends Record<string, string>>(
   sessionKey: string,
@@ -27,7 +36,7 @@ export function useSession<DictionaryType extends Record<string, string>>(
   function getRandom(): keyof DictionaryType {
     const weightedList: Array<keyof DictionaryType> = []
     Object.entries(state.value).forEach(([key, entryState]) => {
-      const weight = Math.max(10 + entryState.errors - entryState.shown, 1)
+      const weight = getWeight(entryState)
       weightedList.push(...Array(weight).fill(key))
     })
 
@@ -50,20 +59,21 @@ export function useSession<DictionaryType extends Record<string, string>>(
     state.value[unref(current)].errors++
   }
 
-  const rankedList = computed(() => {
-    const list: Array<[keyof DictionaryType, number]> = Object.entries(
-      state.value
-    ).map(([key, entryState]) => {
-      const weight = Math.max(10 + entryState.errors - entryState.shown, 1)
-      return [key, weight]
-    })
-    return list.sort((a, b) => b[1] - a[1])
-  })
+  const results = computed<ResultItem<DictionaryType>[]>(() =>
+    Object.entries(state.value).map(([key, entryState]) => ({
+      key,
+      accuracy:
+        entryState.shown === 0
+          ? 0
+          : (entryState.shown - entryState.errors) / entryState.shown,
+      ...entryState,
+    }))
+  )
 
   return {
     current,
     next,
     addError,
-    rankedList,
+    results,
   }
 }

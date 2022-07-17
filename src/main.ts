@@ -16,6 +16,10 @@ const routes: RouteRecordRaw[] = [
     path: '/session',
     component: () => import('./views/Session.vue'),
   },
+  {
+    path: '/session-result',
+    component: () => import('./views/SessionResult.vue'),
+  },
 ]
 
 const router = createRouter({
