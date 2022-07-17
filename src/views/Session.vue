@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref, unref, computed } from 'vue'
+import { nextTick, ref, unref, computed } from 'vue'
 import { STORAGE_KEY, DICTIONARY } from '../constants/dictionary'
 import { useSession } from '../hooks/use-session'
 import { useTimer } from '../hooks/use-timer'
@@ -62,8 +62,24 @@ pause()
 <template>
   <div class="flex gap-3">
     <ActionButton @click="toggleSession">
-      <template v-if="sessionRunning">Stop Session</template>
-      <template v-else>Start Session</template>
+      <template v-if="sessionRunning">
+        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24" class="mr-2">
+          <path
+            fill="currentColor"
+            d="M13,16V8H15V16H13M9,16V8H11V16H9M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z"
+          />
+        </svg>
+        Stop Session
+      </template>
+      <template v-else>
+        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24" class="mr-2">
+          <path
+            fill="currentColor"
+            d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M10,16.5L16,12L10,7.5V16.5Z"
+          />
+        </svg>
+        Start Session
+      </template>
     </ActionButton>
   </div>
   <template v-if="sessionRunning">
