@@ -49,7 +49,7 @@ export const DICTIONARY = {
   '-': 'minus',
   '+': 'plus',
   '*': 'star',
-  '#': 'pound',
+  '#': 'hash',
   '/': 'slash',
   '\\': 'backslash',
   $: 'dollar',
