@@ -83,7 +83,10 @@ pause()
       Say: <span class="font-medium">"{{ word }}"</span>
     </aside>
   </template>
-  <div v-else class="grid gap-4 grid-cols-3">
+  <div
+    v-else
+    class="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
+  >
     <div
       v-for="item in results"
       :key="item.key"

@@ -9,7 +9,7 @@ import MenuItem from './components/MenuItem.vue'
       <MenuItem to="/alphabet">Alphabet</MenuItem>
       <MenuItem to="/session">Session</MenuItem>
     </nav>
-    <div class="flex flex-col items-center space-y-10 py-10">
+    <div class="flex flex-col items-center space-y-10 py-10 px-4">
       <router-view />
     </div>
   </main>
