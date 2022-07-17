@@ -5,10 +5,9 @@ import { useSession } from '../hooks/use-session'
 import { useTimer } from '../hooks/use-timer'
 import QuestionBox from '../components/QuestionBox.vue'
 import ActionButton from '../components/ActionButton.vue'
-import LinkButton from '../components/LinkButton.vue'
 
 const boxRef = ref()
-const { current, next, addError } = useSession(STORAGE_KEY, DICTIONARY)
+const { current, next, addError, results } = useSession(STORAGE_KEY, DICTIONARY)
 const sessionRunning = ref(false)
 const showWord = ref(false)
 const word = computed(() => DICTIONARY[unref(current)])
@@ -58,7 +57,6 @@ async function toggleSession() {
 }
 
 pause()
-onMounted(() => unref(boxRef).reset())
 </script>
 
 <template>
@@ -67,21 +65,45 @@ onMounted(() => unref(boxRef).reset())
       <template v-if="sessionRunning">Stop Session</template>
       <template v-else>Start Session</template>
     </ActionButton>
-    <LinkButton to="/session-result">Show Results</LinkButton>
   </div>
-  <QuestionBox
-    ref="boxRef"
-    :character="current"
-    @correctAnswer="handleCorrectAnswer"
-    :disabled="!sessionRunning"
-  />
-  <div class="h-3 bg-purple-200 w-60 rounded-lg overflow-hidden mb-3">
+  <template v-if="sessionRunning">
+    <QuestionBox
+      ref="boxRef"
+      :character="current"
+      @correctAnswer="handleCorrectAnswer"
+      :disabled="!sessionRunning"
+    />
+    <div class="h-3 bg-purple-200 w-60 rounded-lg overflow-hidden mb-3">
+      <div
+        class="h-3 bg-purple-800 origin-right"
+        :style="{ transform: `scaleX(${timeLeft / ANSWER_TIME})` }"
+      ></div>
+    </div>
+    <aside class="text-center mt-6 text-5xl text-slate-700" v-if="showWord">
+      Say: <span class="font-medium">"{{ word }}"</span>
+    </aside>
+  </template>
+  <div v-else class="grid gap-4 grid-cols-3">
     <div
-      class="h-3 bg-purple-800 origin-right"
-      :style="{ transform: `scaleX(${timeLeft / ANSWER_TIME})` }"
-    ></div>
+      v-for="item in results"
+      :key="item.key"
+      class="p-3 rounded-md shadow-xl bg-white"
+    >
+      <div class="text-xl text-center font-medium text-slate-800">
+        {{ item.key }}
+      </div>
+      <div class="text-sm text-center mb-2 text-slate-400">
+        {{ DICTIONARY[item.key] }}
+      </div>
+      <div class="w-40 bg-slate-200">
+        <div
+          class="h-4"
+          :class="item.accuracy > 0.8 ? 'bg-green-600' : 'bg-yellow-600'"
+          :style="{
+            width: `${item.accuracy * 100}%`,
+          }"
+        ></div>
+      </div>
+    </div>
   </div>
-  <aside class="text-center mt-6 text-5xl text-slate-700" v-if="showWord">
-    Say: <span class="font-medium">"{{ word }}"</span>
-  </aside>
 </template>

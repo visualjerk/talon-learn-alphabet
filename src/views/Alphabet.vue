@@ -28,35 +28,33 @@ onMounted(() => unref(boxRef).reset())
 </script>
 
 <template>
-  <article class="text-xs">
-    <div class="flex gap-3 justify-between">
-      <button
-        @click="toggleEasyMode"
-        class="mt-4 flex bg-purple-50 border-2 border-purple-600 rounded-md"
+  <div class="flex gap-3 justify-between">
+    <button
+      @click="toggleEasyMode"
+      class="flex bg-purple-50 border-2 border-purple-600 rounded-md"
+    >
+      <div
+        class="px-3 py-2 rounded-l-sm"
+        :class="[
+          easyMode
+            ? 'bg-purple-700 text-purple-50'
+            : 'bg-transparent text-purple-800',
+        ]"
       >
-        <div
-          class="px-3 py-2 rounded-l-sm"
-          :class="[
-            easyMode
-              ? 'bg-purple-700 text-purple-50'
-              : 'bg-transparent text-purple-800',
-          ]"
-        >
-          Easy
-        </div>
-        <div
-          class="px-3 py-2 rounded-r-sm"
-          :class="[
-            !easyMode
-              ? 'bg-purple-700 text-purple-50'
-              : 'bg-transparent text-purple-800',
-          ]"
-        >
-          Hard
-        </div>
-      </button>
-    </div>
-  </article>
+        Easy
+      </div>
+      <div
+        class="px-3 py-2 rounded-r-sm"
+        :class="[
+          !easyMode
+            ? 'bg-purple-700 text-purple-50'
+            : 'bg-transparent text-purple-800',
+        ]"
+      >
+        Hard
+      </div>
+    </button>
+  </div>
   <div class="flex items-center flex-col">
     <QuestionBox
       ref="boxRef"
