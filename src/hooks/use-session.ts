@@ -33,6 +33,12 @@ export function useSession<DictionaryType extends Record<string, string>>(
 
   const state = useStorage(sessionKey, emptyState)
 
+  Object.entries(emptyState).forEach(([key, entryState]) => {
+    if (!state.value.hasOwnProperty(key)) {
+      state.value[key as keyof DictionaryType] = entryState
+    }
+  })
+
   function getRandom(): keyof DictionaryType {
     const weightedList: Array<keyof DictionaryType> = []
     Object.entries(state.value).forEach(([key, entryState]) => {
@@ -41,7 +47,6 @@ export function useSession<DictionaryType extends Record<string, string>>(
     })
 
     const result = weightedList[Math.floor(Math.random() * weightedList.length)]
-    state.value[result].shown++
     return result
   }
 
@@ -53,6 +58,7 @@ export function useSession<DictionaryType extends Record<string, string>>(
       next = getRandom()
     }
     current.value = next
+    state.value[next].shown++
   }
 
   function addError() {

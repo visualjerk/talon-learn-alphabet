@@ -50,6 +50,7 @@ async function toggleSession() {
   if (unref(isActive)) {
     pause()
   } else {
+    next()
     resume()
   }
   await nextTick()
