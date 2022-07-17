@@ -38,7 +38,7 @@ defineExpose({
 
 <template>
   <div
-    class="flex items-center flex-col p-8 pt-4 border-4 rounded-2xl shadow-2xl"
+    class="flex items-center flex-col p-8 pt-4 border rounded-2xl shadow-2xl"
     :class="[
       hasCorrectAnswer
         ? 'border-green-600 bg-green-50 shadow-green-300'

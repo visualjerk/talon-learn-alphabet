@@ -4,7 +4,9 @@ import MenuItem from './components/MenuItem.vue'
 
 <template>
   <main class="min-h-screen bg-slate-50">
-    <nav class="flex gap-2 p-2 shadow-md sticky top-0 z-10 bg-slate-50">
+    <nav
+      class="flex gap-2 p-2 sticky top-0 z-10 bg-slate-50 border-b border-slate-200"
+    >
       <MenuItem to="/">Intro</MenuItem>
       <MenuItem to="/alphabet">Alphabet</MenuItem>
       <MenuItem to="/session">Session</MenuItem>

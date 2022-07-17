@@ -85,22 +85,22 @@ pause()
   </template>
   <div
     v-else
-    class="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
+    class="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
   >
     <div
       v-for="item in results"
       :key="item.key"
-      class="p-3 rounded-md shadow-xl bg-white"
+      class="p-4 rounded-md shadow-xs bg-white border border-slate-100"
     >
       <div class="text-xl text-center font-medium text-slate-800">
         {{ item.key }}
       </div>
-      <div class="text-sm text-center mb-2 text-slate-400">
+      <div class="text-sm text-center mb-4 text-slate-400">
         {{ DICTIONARY[item.key] }}
       </div>
-      <div class="w-40 bg-slate-200">
+      <div class="w-40 bg-slate-200 rounded-md overflow-hidden">
         <div
-          class="h-4"
+          class="h-2"
           :class="item.accuracy > 0.8 ? 'bg-green-600' : 'bg-yellow-600'"
           :style="{
             width: `${item.accuracy * 100}%`,

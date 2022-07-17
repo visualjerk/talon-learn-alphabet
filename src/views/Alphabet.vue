@@ -31,7 +31,7 @@ onMounted(() => unref(boxRef).reset())
   <div class="flex gap-3 justify-between">
     <button
       @click="toggleEasyMode"
-      class="flex bg-purple-50 border-2 border-purple-600 rounded-md"
+      class="flex bg-purple-50 border-2 border-purple-600 rounded-md font-medium"
     >
       <div
         class="px-3 py-2 rounded-l-sm"
