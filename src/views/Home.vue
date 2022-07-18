@@ -28,7 +28,7 @@ import LinkButton from '../components/LinkButton.vue'
       <li>Start learning by choosing an option</li>
     </ol>
     <div class="flex gap-3 mt-8">
-      <LinkButton to="/alphabet"> Learn Simple Alphabet </LinkButton>
+      <LinkButton to="/alphabet"> Learn Alphabet </LinkButton>
       <LinkButton to="/session"> Start Timed Session </LinkButton>
     </div>
   </article>
