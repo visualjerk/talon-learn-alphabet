@@ -7,7 +7,7 @@ import MenuItem from './components/MenuItem.vue'
     <header
       class="flex items-center gap-3 p-2 justify-between sticky top-0 z-10 bg-slate-50 border-b border-slate-200"
     >
-      <h1 class="text-purple-600 flex items-center pl-2">
+      <router-link to="/" class="text-purple-600 flex items-center pl-2">
         <div
           class="bg-purple-800 h-7 w-7 flex items-center justify-center mr-2 rounded-full text-purple-300"
         >
@@ -20,7 +20,7 @@ import MenuItem from './components/MenuItem.vue'
         </div>
         Learn
         <span class="font-bold text-purple-800">Talon</span>
-      </h1>
+      </router-link>
       <nav class="flex items-center gap-2">
         <MenuItem to="/">Intro</MenuItem>
         <MenuItem to="/alphabet">Alphabet</MenuItem>
